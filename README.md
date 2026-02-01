@@ -43,7 +43,10 @@ A simple script that sets up a VMess proxy server using Sing-Box and automatical
    - **V2RayN (Windows)**: Subscription → Add subscription
    - **Clash (Mobile/Desktop)**: Configuration → Remote → Add → Paste URL
 3. **Update subscription** to get latest servers
-4. **Connect** to any of the generated servers
+4. **Use real delay test** in your client to find the best performing IP
+5. **Connect** to any of the generated servers
+
+> **💡 Tip**: Use the delay/speed test feature in your V2Ray client to find the fastest Cloudflare IP for your location. Different IPs may perform better depending on your network provider.
 
 ---
 
