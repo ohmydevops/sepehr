@@ -48,6 +48,12 @@ A simple script that sets up a VMess proxy server using Sing-Box and automatical
 
 > **💡 Tip**: Use the delay/speed test feature in your V2Ray client to find the fastest Cloudflare IP for your location. Different IPs may perform better depending on your network provider.
 
+## Example Result
+
+Here's what you can expect to see in your V2Ray client after adding the subscription:
+
+![Final Result](result.png)
+
 ---
 
 **Requirements**: Ubuntu/Debian server, domain name, root access
