@@ -6,6 +6,14 @@ Automated VMess proxy server with CloudFlare CDN support and dynamic subscriptio
 
 A simple script that sets up a VMess proxy server using Sing-Box and automatically generates subscription links with CloudFlare IP addresses for bypassing censorship.
 
+## What you get
+
+- Multiple VMess configs with different CloudFlare IPs
+- **Uses all Cloudflare IP ranges** for maximum coverage and performance
+- Auto-updating subscription (refreshes every minute)
+- Random subdomains for better performance
+- TLS encryption for security
+
 ## Setup
 
 1. **Setup CloudFlare Domain:**
@@ -34,13 +42,6 @@ A simple script that sets up a VMess proxy server using Sing-Box and automatical
    - **Clash (Mobile/Desktop)**: Configuration → Remote → Add → Paste URL
 3. **Update subscription** to get latest servers
 4. **Connect** to any of the generated servers
-
-## What you get
-
-- Multiple VMess configs with different CloudFlare IPs
-- Auto-updating subscription (refreshes every minute)
-- Random subdomains for better performance
-- TLS encryption for security
 
 ---
 
