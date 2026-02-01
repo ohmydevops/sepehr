@@ -1,4 +1,4 @@
-# 🤍 Sepehr VMess Proxy
+# 🤍 Sepehr Project
 
 Automated VMess proxy server with CloudFlare CDN support and dynamic subscriptions.
 
