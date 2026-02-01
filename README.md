@@ -23,6 +23,8 @@ A simple script that sets up a VMess proxy server using Sing-Box and automatical
    - **Enable proxy (orange cloud)** on both records
    - This enables both `example.com` and `*.example.com` support with CDN protection
 
+   ![DNS Configuration](screen.png)
+
 2. **Run installer:**
    ```bash
    ./install.sh
