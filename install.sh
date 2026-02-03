@@ -173,5 +173,5 @@ systemctl restart nginx
 echo ""
 echo "=== Installation Complete ==="
 echo ""
-echo "Subscription URL: https://$DOMAIN$SUB_PATH"
+echo "Subscription URL: https://s.$DOMAIN$SUB_PATH"
 echo ""

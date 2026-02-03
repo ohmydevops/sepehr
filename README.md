@@ -1,10 +1,6 @@
 # 🤍 Sepehr Project
 
-Automated VMess proxy server with CloudFlare CDN support and dynamic subscriptions.
-
-## What is this?
-
-A simple script that sets up a VMess proxy server using Sing-Box and automatically generates subscription links with CloudFlare IP addresses for bypassing censorship.
+A simple script that sets up a VMess proxy server using Sing-Box and automatically generates subscription links with CloudFlare IP addresses for bypassing censorship. **The key difference of this project is using all Cloudflare IP ranges for one VMess config**, providing maximum coverage and flexibility.
 
 ## What you get
 
@@ -18,10 +14,9 @@ A simple script that sets up a VMess proxy server using Sing-Box and automatical
 
 1. **Setup CloudFlare Domain:**
    - Add your domain to CloudFlare
-   - Create an A record: `@` pointing to your server IP (for root domain)
    - Create an A record: `*` pointing to your server IP (for wildcard subdomains)
-   - **Enable proxy (orange cloud)** on both records
-   - This enables both `example.com` and `*.example.com` support with CDN protection
+   - **Enable proxy (orange cloud)** on the record
+   - This enables `*.example.com` support with CDN protection
 
    ![DNS Configuration](screen.png)
 
