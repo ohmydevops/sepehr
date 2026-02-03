@@ -13,12 +13,8 @@ A simple script that sets up a VMess proxy server using Sing-Box and automatical
 ## Setup
 
 1. **Setup CloudFlare Domain:**
-   - Add your domain to CloudFlare
-   - Create an A record: `*` pointing to your server IP (for wildcard subdomains)
-   - **Enable proxy (orange cloud)** on the record
-   - This enables `*.example.com` support with CDN protection
-
-   ![DNS Configuration](screen.png)
+   - Create a wildcard A record: `*` pointing to your server IP
+   - Enable proxy (orange cloud) on the record
 
 2. **Run installer:**
    ```bash
@@ -27,11 +23,11 @@ A simple script that sets up a VMess proxy server using Sing-Box and automatical
 
 3. **Enter your domain** when prompted (e.g., `example.com`)
 
-4. **Done!** Your subscription URL will be: `https://example.com/koje`
+4. **Done!** Your subscription URL will be: `https://s.example.com/koje`
 
 ## How to use in V2Ray clients
 
-1. **Copy subscription URL**: `https://example.com/koje`
+1. **Copy subscription URL**.
 2. **Add to your V2Ray client**:
    - **V2RayNG (Android)**: Settings → Subscription → Add → Paste URL
    - **Shadowrocket (iPhone)**: Home → + → Subscribe → Paste URL
