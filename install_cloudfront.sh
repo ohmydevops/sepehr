@@ -9,12 +9,12 @@ fi
 
 # Clean previous installation
 echo "Cleaning previous installation..."
-systemctl stop xray 2>/dev/null || true
-systemctl disable xray 2>/dev/null || true
+systemctl stop sing-box 2>/dev/null || true
+systemctl disable sing-box 2>/dev/null || true
 systemctl stop nginx 2>/dev/null || true
 
 # Remove old configs
-rm -f /usr/local/etc/xray/config.json
+rm -f /etc/sing-box/config.json
 rm -f /etc/nginx/sites-enabled/v2ray
 rm -f /etc/nginx/sites-available/v2ray
 rm -f /var/www/html/subscription.txt
@@ -32,7 +32,7 @@ generate_uuid() {
 }
 
 # Prompt for configuration
-echo "=== Xray + Trojan + Nginx Setup (CloudFront) ==="
+echo "=== Sing-Box + Trojan + Nginx Setup (CloudFront) ==="
 read -p "Enter your domain: " DOMAIN
 
 # Auto-generate Trojan password and XHTTP path
@@ -46,39 +46,48 @@ echo "Generated Trojan password: $TROJAN_PASSWORD"
 echo "Generated XHTTP path: $XHTTP_PATH"
 echo "Subscription link path: $SUB_PATH"
 
-# Install Xray-core
-echo "Installing Xray-core..."
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+# Install Sing-Box
+echo "Installing Sing-Box..."
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://sing-box.app/gpg.key -o /etc/apt/keyrings/sagernet.asc
+chmod a+r /etc/apt/keyrings/sagernet.asc
 
-# Create Xray config
-echo "Creating Xray configuration..."
-mkdir -p /usr/local/etc/xray
-cat > /usr/local/etc/xray/config.json << EOF
+echo 'Types: deb
+URIs: https://deb.sagernet.org/
+Suites: *
+Components: *
+Enabled: yes
+Signed-By: /etc/apt/keyrings/sagernet.asc' | tee /etc/apt/sources.list.d/sagernet.sources
+
+apt-get update
+apt-get install -y sing-box
+
+# Create Sing-Box config
+echo "Creating Sing-Box configuration..."
+mkdir -p /etc/sing-box
+cat > /etc/sing-box/config.json << EOF
 {
   "inbounds": [
     {
+      "type": "trojan",
       "listen": "127.0.0.1",
-      "port": 8080,
-      "protocol": "trojan",
-      "settings": {
-        "clients": [
-          {
-            "password": "$TROJAN_PASSWORD"
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "httpupgrade",
-        "httpupgradeSettings": {
-          "path": "$XHTTP_PATH",
-          "host": "$DOMAIN"
+      "listen_port": 8080,
+      "users": [
+        {
+          "name": "cloudfront",
+          "password": "$TROJAN_PASSWORD"
         }
+      ],
+      "transport": {
+        "type": "httpupgrade",
+        "host": "$DOMAIN",
+        "path": "$XHTTP_PATH"
       }
     }
   ],
   "outbounds": [
     {
-      "protocol": "freedom"
+      "type": "direct"
     }
   ]
 }
@@ -157,8 +166,8 @@ echo "Initial subscription generated"
 
 # Enable and start services
 echo "Starting services..."
-systemctl enable xray
-systemctl start xray
+systemctl enable sing-box
+systemctl start sing-box
 systemctl enable nginx
 systemctl restart nginx
 
