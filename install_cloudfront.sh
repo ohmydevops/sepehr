@@ -20,7 +20,7 @@ rm -f /etc/nginx/sites-available/v2ray
 rm -f /var/www/html/subscription.txt
 
 # Remove old cron jobs
-crontab -l 2>/dev/null | grep -v "vmess.py" | crontab - 2>/dev/null || true
+crontab -l 2>/dev/null | grep -v "cloudfront.py" | crontab - 2>/dev/null || true
 
 echo "Installing dependencies..."
 apt-get update
@@ -32,7 +32,7 @@ generate_uuid() {
 }
 
 # Prompt for configuration
-echo "=== Sing Box + V2Ray VMess + Nginx Setup ==="
+echo "=== Sing Box + V2Ray VMess + Nginx Setup (CloudFront) ==="
 read -p "Enter your domain: " DOMAIN
 
 # Auto-generate VMess ID and WebSocket path
@@ -92,7 +92,7 @@ cat > /etc/sing-box/config.json << EOF
 }
 EOF
 
-# Create simple config file for vmess.py
+# Create simple config file for cloudfront.py
 echo "Creating config file..."
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cat > "$SCRIPT_DIR/config.json" << EOF
@@ -112,7 +112,7 @@ echo "VMess subscription will be here" > /var/www/html/subscription.txt
 # Setup cron for auto-update
 echo "Setting up cron job for auto-update..."
 # Add cron job to update subscription every minute
-(crontab -l 2>/dev/null; echo "* * * * * cd $SCRIPT_DIR && python3 vmess.py > /var/www/html/subscription.txt") | crontab -
+(crontab -l 2>/dev/null; echo "* * * * * cd $SCRIPT_DIR && python3 cloudfront.py > /var/www/html/subscription.txt") | crontab -
 echo "Cron job added to update subscription every minute"
 
 # Create Nginx configuration
@@ -121,7 +121,7 @@ cat > /etc/nginx/sites-available/v2ray << EOF
 server {
     listen 80;
     listen [::]:80;
-    server_name *.$DOMAIN;
+    server_name $DOMAIN;
 
     location $WS_PATH {
         proxy_pass http://127.0.0.1:8080;
@@ -160,7 +160,7 @@ fi
 
 # Generate initial subscription
 echo "Generating initial subscription..."
-cd "$SCRIPT_DIR" && python3 vmess.py > /var/www/html/subscription.txt
+cd "$SCRIPT_DIR" && python3 cloudfront.py > /var/www/html/subscription.txt
 echo "Initial subscription generated"
 
 # Enable and start services
@@ -173,5 +173,5 @@ systemctl restart nginx
 echo ""
 echo "=== Installation Complete ==="
 echo ""
-echo "Subscription URL: https://s.$DOMAIN$SUB_PATH"
+echo "Subscription URL: https://$DOMAIN$SUB_PATH"
 echo ""
