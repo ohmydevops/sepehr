@@ -16,8 +16,8 @@ def config_generator(domain, uuid, ws_path, ip=""):
     host = random_subdomain + "." + domain
     j = json.dumps({
         "v": "2", "ps": name, "add": ip, "port": "443", "id": uuid,
-        "aid": "0", "net": "ws", "type": "none", "sni": host, "fp": "random",
-        "host": host, "path": ws_path, "tls": "tls", "alpn": "h2,http/1.1"
+        "aid": "0", "net": "xhttp", "type": "none", "sni": host, "fp": "random",
+        "host": host, "path": ws_path, "tls": "tls", "alpn": "h2"
     })
     return ("vmess://" + base64.b64encode(j.encode('ascii')).decode('ascii'))
 
