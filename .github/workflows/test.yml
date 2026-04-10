@@ -1,4 +1,4 @@
-name: Test vmess config generator
+name: CI
 
 on:
   push:
@@ -7,17 +7,17 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  vmess-config-generator:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - name: Create test config
+      - name: Create mock config
         run: |
           cat > config.json <<'EOF'
           {
@@ -27,7 +27,7 @@ jobs:
           }
           EOF
 
-      - name: Run vmess.py
+      - name: Validate generated configs
         run: |
           output=$(python vmess.py)
           # Check output is non-empty

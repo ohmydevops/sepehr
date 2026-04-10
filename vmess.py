@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 import ipaddress
 
-def config_generator(domain, uuid, operatorName, ws_path, ip=""):
+def config_generator(domain, uuid, ws_path, ip=""):
     if ip == "":
         ip = domain
     # Generate random subdomain with letters and numbers
@@ -40,10 +40,8 @@ for line in lines:
     for tempIP in ipaddress.IPv4Network(str(line).strip()):
         temp.append(tempIP)
     finalIP = str(random.choice(temp))
-    hash = (hashlib.md5(str(random.randint(10000, 3000000)).encode()).hexdigest())[0: 8]
-    
     # Generate config with actual WebSocket path
-    config = config_generator(domain, uuid, hash, ws_path, finalIP.strip())
+    config = config_generator(domain, uuid, ws_path, finalIP.strip())
     jsonObj.append(config)
 
 fullRawconfigs = "\n".join(jsonObj)
