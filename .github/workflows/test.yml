@@ -38,7 +38,7 @@ jobs:
           # Check output is valid base64 that decodes to vmess:// links
           decoded=$(echo "$output" | base64 -d)
           count=$(echo "$decoded" | grep -c '^vmess://')
-          ip_count=$(wc -l < cloudflare_ips.txt)
+          ip_count=$(grep -c . cloudflare_ips.txt)
           echo "Generated $count configs for $ip_count IP ranges"
           if [ "$count" -ne "$ip_count" ]; then
             echo "ERROR: expected $ip_count configs, got $count"
